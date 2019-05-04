@@ -1,11 +1,11 @@
 require 'pg'
 
-class Post
+class Player
   attr_accessor(:id, :title, :body)
 
   #Connect to the database
   def self.open_connection
-    connection = PG.connect(dbname: 'blog')
+    connection = PG.connect(dbname: 'sports')
   end
 
   #Method to get all the blog posts
@@ -43,7 +43,7 @@ class Post
 
   #Passing the PG object through hydration by making an instance within the class
   def self.hydrate(post_data)
-    post = Post.new
+    post = Player.new
 
     post.id = post_data['id']
     post.title = post_data['title']
@@ -53,7 +53,7 @@ class Post
   end
 
   def save
-    connection = Post.open_connection
+    connection = Player.open_connection
 
     if !self.id
       sql = "INSERT INTO post (title, body) VALUES ('#{self.title}', '#{self.body}')"

@@ -1,35 +1,15 @@
 require "sinatra/base"
-
-require "./controllers/players_controller"
+require "./controllers/homepage_controller"
 require "./controllers/football_teams_controller"
 
+require "./controllers/players_controller"
+
 class App < Sinatra::Base
+  use HomePageController
   use PlayerController
   use FootballTeamController
 
 
-  set :root, File.join(File.dirname(__FILE__), ".")
-
-  set :views, Proc.new { File.join(root, "views") }
-
-  configure :development do
-    register Sinatra::Reloader
-  end
-
-
-  get '/' do
-    erb :'homepage/index'
-  end
-
-
-
-  get '/players' do
-
-  end
-
-  get '/teams' do
-
-  end
 
 end
 

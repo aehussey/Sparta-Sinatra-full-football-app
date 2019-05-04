@@ -8,7 +8,7 @@ class PlayerController < Sinatra::Base
     register Sinatra::Reloader
   end
 
-  $teams = [{
+  $players = [{
     id: 0,
     name: "Jonjo",
     points: 92,
@@ -43,7 +43,7 @@ class PlayerController < Sinatra::Base
 
   get "/players" do
 
-    @teams = $teams
+    @players = $players
 
     erb :'players/index'
 

@@ -1,5 +1,4 @@
 
-
 class FootballTeamController < Sinatra::Base
 
 
@@ -49,7 +48,7 @@ class FootballTeamController < Sinatra::Base
 
     @teams = $teams
 
-    erb :'teams/index'
+    erb :'football_teams/index'
 
   end
 
