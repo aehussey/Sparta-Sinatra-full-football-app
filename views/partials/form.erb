@@ -1,0 +1,21 @@
+<form action="/<%= @teams[:id] %>" method="post">
+  <div>
+    <label>Name</label>
+    <input type="text" name="name" placeholder="Enter a team name" value="<%= @teams[:name] %>">
+  </div>
+  <div>
+    <label>Points</label>
+    <input type="text" name="points" placeholder="Enter a points total" value="<%= @teams[:points] %>">
+  </div>
+  <div>
+    <label>Position</label>
+    <input type="text" name="position" placeholder="Enter a position" value="<%= @teams[:position] %>">
+  </div>
+  <div>
+    <input type="submit" value="Save Post">
+  </div>
+
+  <% if @teams[:id] != "" %>
+  <input type="hidden" name="_method" value="put">
+  <% end %>
+</form>

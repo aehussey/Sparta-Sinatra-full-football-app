@@ -1,0 +1,11 @@
+<h1>Welcome to My top 4 Football Page</h1>
+
+
+<% @teams.each do |team| %>
+<div>
+  <h3>
+    <a href="/<%= team[:id] %>"><%= team[:name] %></a>
+  </h3>
+  <p><%= "#{team[:name]} have #{team[:points]} points and are in #{team[:position]} place" %></p>
+</div>
+<% end %>

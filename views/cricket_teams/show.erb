@@ -1,0 +1,14 @@
+<h1> <%= @teams[:name] %> </h1>
+
+<img src=<%= @teams[:image] %> alt="">
+
+
+<p><%= "#{@teams[:name]} have #{@teams[:points]} points and are in #{@teams[:position]} place" %></p>
+
+<a href="/<%= @teams[:id] %>/edit">edit</a>
+
+
+<form  action="/<%= @teams[:id] %>" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete">
+</form>
