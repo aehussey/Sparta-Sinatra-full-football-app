@@ -22,15 +22,19 @@
 
       <% @players.each do |player| %>
       <div>
-        <p><%=player.name + player.inspect%></p>
+
+        <p> <a href="/players/<%= player.id %>"><%= "#{player.first_name} #{player.last_name}" %></a> <%= "plays as #{player.position} for #{player.name}" %></p>
       </div>
       <% end %>
 
-      <a class="btn btn-default" href="/teams/<%= @teams.id %>/edit">edit</a>
+      <a class="btn btn-default" href="/teams">Football Teams</a>
+
+
+      <a class="btn btn-default" href="/teams/<%= @teams.id %>/edit">Edit</a>
 
 
 
-      <form  class = "btn" action="/teams/<%= @teams.id %>" method="post">
+      <form  class = "btn delete" action="/teams/<%= @teams.id %>" method="post">
         <input class="btn btn-default" type="hidden" name="_method" value="DELETE">
         <input class="btn btn-default" type="submit" value="Delete">
       </form>

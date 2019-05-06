@@ -11,38 +11,6 @@ class PlayerController < Sinatra::Base
     register Sinatra::Reloader
   end
 
-  # $players = [{
-  #   id: 0,
-  #   name: "Jonjo",
-  #   points: 92,
-  #   position: "1st",
-  #   image: "https://picsum.photos/200"
-  #
-  #   },
-  #   {
-  #   id: 1,
-  #   name: "CHO",
-  #   points: 91,
-  #   position: "2nd",
-  #   image: "https://picsum.photos/200"
-  #
-  #   },
-  #   {
-  #   id: 2,
-  #   name: "RLC",
-  #   points: 71,
-  #   position: "3rd",
-  #   image: "https://picsum.photos/200"
-  #
-  #   },
-  #   {
-  #   id: 3,
-  #   name: "JT",
-  #   points: 70,
-  #   position: "4th",
-  #   image: "https://picsum.photos/200"
-  #   }]
-
 
   get "/players" do
 
@@ -61,9 +29,6 @@ class PlayerController < Sinatra::Base
   get "/players/:id" do
     id = params[:id].to_i
     @players = Player.find(id)
-    puts @players.first_name
-    puts  @players.last_name
-    @team = Player.team(@players.first_name, @players.last_name)
 
     erb  :'players/show'
   end
@@ -71,6 +36,8 @@ class PlayerController < Sinatra::Base
   get "/players/:id/edit" do
     id = params[:id].to_i
     @players = Player.find(id)
+    @teams = Player.all_teams
+    puts  @teams.inspect
     erb :'players/edit'
   end
 

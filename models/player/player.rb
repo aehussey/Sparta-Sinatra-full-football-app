@@ -1,7 +1,7 @@
 require 'pg'
 
 class Player
-  attr_accessor(:id, :first_name, :last_name, :age, :position, :team_id, :image)
+  attr_accessor(:id, :first_name, :last_name, :age, :position, :team_id, :image, :name)
 
   #Connect to the database
   def self.open_connection
@@ -26,10 +26,26 @@ class Player
     posts
   end
 
+  def self.all_teams
+    connection = self.open_connection
+
+    sql = "SELECT id, name, points, position FROM football_team ORDER BY id"
+
+    results = connection.exec(sql)
+
+
+    #return array of post objects
+
+    teams = results.map do |team|
+      self.hydrate(team)
+    end
+    teams
+  end
+
   def self.find(id)
     connection = self.open_connection
 
-    sql = "SELECT * FROM player WHERE id = #{id} LIMIT 1"
+    sql = "SELECT * FROM teams_with_players WHERE id = #{id} LIMIT 1"
 
     posts = connection.exec(sql)
 
@@ -52,6 +68,7 @@ class Player
     player.position = player_data['position']
     player.team_id = player_data['team_id']
     player.image = player_data['image']
+    player.name = player_data['name']
 
     player
   end
@@ -79,21 +96,6 @@ class Player
   end
 
 
-  def self.team(first_name, last_name)
-    connection = self.open_connection
 
-    sql = "Select p.first_name, p.last_name, t.name FROM player p INNER JOIN football_team t ON p.team_id = t.id WHERE p.first_name = '#{first_name}' AND p.last_name = '#{last_name}';"
-
-    results = connection.exec(sql)
-
-    teams = results.map do |team|
-      self.hydrate(team)
-    end
-
-    teams
-
-  end
 
 end
-
-# puts Post.all

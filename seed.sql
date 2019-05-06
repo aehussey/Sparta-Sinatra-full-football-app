@@ -1,5 +1,7 @@
+DROP VIEW IF EXISTS teams_with_players;
 DROP TABLE IF EXISTS player;
 DROP TABLE IF EXISTS football_team;
+
 
 CREATE TABLE football_team (
   id SERIAL PRIMARY KEY,
@@ -53,3 +55,7 @@ INSERT INTO cricket_team (name, points, position, image) VALUES ('Australia', 12
 INSERT INTO cricket_team (name, points, position, image) VALUES ('India', 15, '1st', 'https://picsum.photos/200');
 INSERT INTO cricket_team (name, points, position, image) VALUES ('New Zeland', 12, '3rd=', 'https://picsum.photos/200');
 INSERT INTO cricket_team (name, points, position, image) VALUES ('Afghanistan', 8, '5th', 'https://picsum.photos/200');
+
+DROP VIEW IF EXISTS teams_with_players;
+
+CREATE VIEW teams_with_players AS Select p.id, p.first_name, p.last_name, p.age, p.position, p.image, p.team_id, t.name FROM player p INNER JOIN football_team t ON p.team_id = t.id;

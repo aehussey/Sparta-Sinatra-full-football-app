@@ -1,25 +1,45 @@
-<form action="/players/<%= @players.id %>" method="post">
-  <div>
-    <label>First Name</label>
-    <input type="text" name="first_name" placeholder="Enter the player's first name" value="<%= @players.first_name %>">
-  </div>
-  <div>
-    <label>Last Name</label>
-    <input type="text" name="last_name" placeholder="Enter the player's first name" value="<%= @players.last_name %>">
-  </div>
-  <div>
-    <label>Age</label>
-    <input type="number" name="age" placeholder="Enter the player's age" value=<%= @players.age %>>
-  </div>
-  <div>
-    <label>Position</label>
-    <input type="text" name="position" placeholder="Enter the player's position" value="<%= @players.position %>">
-  </div>
-  <div>
-    <input type="submit" value="Save Post">
-  </div>
+<div class="container-fluid">
+  <form action="/players/<%= @players.id %>" method="post">
+    <div>
+      <label>First Name</label>
+      <input type="text" name="first_name" placeholder="Enter the player's first name" value="<%= @players.first_name %>">
+    </div>
+    <div>
+      <label>Last Name</label>
+      <input type="text" name="last_name" placeholder="Enter the player's first name" value="<%= @players.last_name %>">
+    </div>
+    <div>
+      <label>Age</label>
+      <input type="number" name="age" placeholder="Enter the player's age" value=<%= @players.age %>>
+    </div>
+    <div>
+      <label>Position</label>
+      <input type="text" name="position" placeholder="Enter the player's position" value="<%= @players.position %>">
+    </div>
+    <div>
+      <label>Image</label>
+      <input type="text" name="image" placeholder="Enter an image url" value="<%= @players.image %>">
+    </div>
+    <div>
+      <label>
+        Team - Enter
+          <% @teams.each do |team| %>
+          <div>
+            <%= "#{team.id} for #{team.name}" %>
 
-  <% if @players.id %>
-  <input type="hidden" name="_method" value="put">
-  <% end %>
-</form>
+          </div>
+          <% end %>
+    </label>
+      <div>
+        <input type="number" name="team" placeholder="Enter the team id" value=<%= @players.team_id %>>
+      </div>
+    </div>
+    <div>
+      <input type="submit" value="Save Post">
+    </div>
+
+    <% if @players.id %>
+    <input type="hidden" name="_method" value="put">
+    <% end %>
+  </form>
+</div>

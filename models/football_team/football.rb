@@ -1,7 +1,7 @@
 require 'pg'
 
 class Football
-  attr_accessor(:id, :name, :points, :position, :image)
+  attr_accessor(:id, :name, :points, :position, :image, :first_name, :last_name, :position)
 
   #Connect to the database
   def self.open_connection
@@ -50,6 +50,8 @@ class Football
     team.points = team_data['points']
     team.position = team_data['position']
     team.image = team_data['image']
+    team.first_name = team_data['first_name']
+    team.last_name = team_data['last_name']
 
     team
   end
@@ -82,7 +84,7 @@ class Football
   def self.players(id)
     connection = self.open_connection
 
-    sql = "Select p.first_name, p.last_name, t.name FROM player p INNER JOIN football_team t ON p.team_id = t.id WHERE t.id = #{id};"
+    sql = "Select p.id, p.first_name, p.last_name, p.position, t.name FROM player p INNER JOIN football_team t ON p.team_id = t.id WHERE t.id = #{id};"
 
     results = connection.exec(sql)
 
