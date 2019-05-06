@@ -26,6 +26,24 @@ class FootballTeamController < Sinatra::Base
     erb :'football_teams/new'
   end
 
+  post "/teams/" do
+
+    team = Football.new
+
+    team.name = params[:name]
+    team.points = params[:points]
+    team.position = params[:position]
+    team.image = params[:image]
+
+
+    #Save the post to the database
+
+    team.save
+
+    redirect '/teams'
+
+  end
+
   get "/teams/:id" do
     id = params[:id].to_i
     @teams = Football.find(id)
@@ -41,20 +59,7 @@ class FootballTeamController < Sinatra::Base
     erb :'football_teams/edit'
   end
 
-  post "/teams" do
-    team = Football.new
 
-    team.name = params[:name]
-    team.points = params[:points]
-    team.position = params[:position]
-
-    #Save the post to the database
-
-    team.save
-
-    redirect '/teams'
-
-  end
 
   put "/teams/:id" do
 
@@ -65,6 +70,7 @@ class FootballTeamController < Sinatra::Base
     team.name = params[:name]
     team.points = params[:points]
     team.position = params[:position]
+    team.image = params[:image]
 
     team.save
 

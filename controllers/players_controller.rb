@@ -22,6 +22,7 @@ class PlayerController < Sinatra::Base
 
   get "/players/new" do
     @players = Player.new
+    @teams = Player.all_teams
 
     erb :'players/new'
   end
@@ -37,21 +38,20 @@ class PlayerController < Sinatra::Base
     id = params[:id].to_i
     @players = Player.find(id)
     @teams = Player.all_teams
-    puts  @teams.inspect
+
     erb :'players/edit'
   end
 
-  post "/players" do
+  post "/players/" do
     player = Player.new
 
     player.first_name = params[:first_name]
     player.last_name = params[:last_name]
     player.age = params[:age]
     player.position = params[:position]
-    player.team_id = params[:team_id]
     player.image = params[:image]
+    player.team_id = params[:team_id]
 
-    #Save the post to the database
 
     player.save
 
@@ -63,16 +63,16 @@ class PlayerController < Sinatra::Base
 
     id = params[:id].to_i
 
-    team = Player.find(id)
+    player = Player.find(id)
 
     player.first_name = params[:first_name]
     player.last_name = params[:last_name]
     player.age = params[:age]
     player.position = params[:position]
-    player.team_id = params[:team_id]
     player.image = params[:image]
+    player.team_id = params[:team_id]
 
-    team.save
+    player.save
 
     redirect '/players'
 

@@ -42,8 +42,8 @@ class CricketTeamController < Sinatra::Base
     erb :'cricket_teams/edit'
   end
 
-  post "/cricket" do
-    puts "POST THIS"
+  post "/cricket/" do
+
 
     team = Cricket.new
 
@@ -60,7 +60,7 @@ class CricketTeamController < Sinatra::Base
   end
 
   put "/cricket/:id" do
-    puts "EDIT THIS"
+
     id = params[:id].to_i
 
     team = Cricket.find(id)

@@ -1,5 +1,6 @@
 <h1>Welcome to The Football League Page</h1>
 
+
 <div class="container-fluid">
   <% @teams.each do |team| %>
   <div>
@@ -9,4 +10,6 @@
     <p><%= "#{team.name} have #{team.points} points and are in #{team.position} place" %></p>
   </div>
   <% end %>
+  <h3><a href="/teams/new">+ New Team</a></h3>
+  <p>Click here to add a new Team</p>
 </div>

@@ -68,7 +68,7 @@ class Cricket
     connection.exec(sql)
   end
 
-  def self.destroy id
+  def self.destroy(id)
     connection = self.open_connection
 
     sql = "DELETE FROM cricket_team where id = #{id}"
@@ -80,5 +80,3 @@ class Cricket
 
 
 end
-
-# puts Post.all

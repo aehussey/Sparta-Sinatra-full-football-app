@@ -77,11 +77,11 @@ class Player
     connection = Player.open_connection
 
     if !self.id
-      sql = "INSERT INTO post (first_name, last_name, age, position, team_id, image) VALUES ('#{self.first_name}', '#{self.last_name}', #{self.age}, '#{self.position}', #{self.team_id}, '#{self.image}')"
+      sql = "INSERT INTO player (first_name, last_name, age, position, image, team_id) VALUES ('#{self.first_name}', '#{self.last_name}', #{self.age}, '#{self.position}', '#{self.image}' , #{self.team_id})"
 
     else
 
-      sql = "UPDATE post SET first_name = '#{self.first_name}', last_name = '#{self.last_name}', age = #{self.age}, last_name = '#{self.position}' WHERE id = #{self.id}"
+      sql = "UPDATE player SET first_name = '#{self.first_name}', last_name = '#{self.last_name}', age = #{self.age}, position = '#{self.position}', image = '#{self.image}', team_id = #{self.team_id} WHERE id = #{self.id}"
     end
 
     connection.exec(sql)
@@ -90,7 +90,7 @@ class Player
   def self.destroy id
     connection = self.open_connection
 
-    sql = "DELETE FROM post where id = #{id}"
+    sql = "DELETE FROM player where id = #{id}"
 
     connection.exec(sql)
   end

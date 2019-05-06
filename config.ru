@@ -4,8 +4,8 @@ require 'sinatra/contrib' ## reload located here
 require 'pg'
 require './app'
 
-# require_relative './models/post'
-# require_relative './controllers/posts_controller'
+use Rack::MethodOverride
+
 
 run App
 

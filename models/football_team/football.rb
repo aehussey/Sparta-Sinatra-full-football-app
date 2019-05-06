@@ -61,12 +61,13 @@ class Football
 
     if !self.id
 
-      sql = "INSERT INTO football_team (name, points, position) VALUES ('#{self.name}', #{self.points}, '#{self.position}')"
+
+      sql = "INSERT INTO football_team (name, points, position, image) VALUES ('#{self.name}', #{self.points}, '#{self.position}', '#{self.image}')"
 
 
     else
 
-      sql = "UPDATE football_team SET name = '#{self.name}', points = #{self.points}, position = '#{self.position}' WHERE id = #{self.id}"
+      sql = "UPDATE football_team SET name = '#{self.name}', points = #{self.points}, position = '#{self.position}', image = '#{self.image}' WHERE id = #{self.id}"
 
     end
 
@@ -97,5 +98,3 @@ class Football
   end
 
 end
-
-# puts Post.all
