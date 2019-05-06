@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/css/player-index.css">
+
+  </head>
+  <body>
+    <h1>Welcome to The Football Players Page</h1>
+
+    <div class="container-fluid">
+      <% @players.each do |player| %>
+      <div class = "player">
+        <h3>
+          <a href="/players/<%= player.id %>"><%= player.first_name + " " + player.last_name %></a>
+        </h3>
+        <p><%= "#{player.first_name} #{player.last_name} is #{player.age} and plays as a #{player.position}" %></p>
+      </div>
+      <% end %>
+      <div class="player">
+        <h3><a href="/players/new">+ New Player</a></h3>
+        <p>Click here to add a new Player</p>
+      </div>
+    </div>
+
+
+  </body>
+</html>

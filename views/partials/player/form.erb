@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/css/forms.css">
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <form action="/players/<%= @players.id %>" method="post">
+        <div>
+          <label>First Name</label>
+          <input class="long" type="text"  name="first_name" placeholder="Enter the player's first name" value="<%= @players.first_name %>">
+        </div>
+        <div>
+          <label>Last Name</label>
+          <input class="long" type="text" name="last_name" cols = "80" placeholder="Enter the player's first name" value="<%= @players.last_name %>">
+        </div>
+        <div>
+          <label>Age</label>
+          <input class="long" type="number" name="age" placeholder="Enter the player's age" value=<%= @players.age %>>
+        </div>
+        <div>
+          <label>Position</label>
+          <input class="long" type="text" name="position" placeholder="Enter the player's position" value="<%= @players.position %>">
+        </div>
+        <div>
+          <label>Image</label>
+          <input type="text" name="image" placeholder="Enter an image url" value="<%= @players.image %>">
+        </div>
+          <label>
+            Team - Enter
+              <% @teams.each do |team| %>
+              <div>
+                <%= "#{team.id} for #{team.name}" %>
+
+              </div>
+              <% end %>
+        </label>
+          <div>
+            <input type="number" name="team_id" placeholder="Enter the team id" value=<%= @players.team_id %>>
+          </div>
+
+        <div>
+          <input type="submit" value="Save Post">
+        </div>
+
+        <% if @players.id %>
+        <input type="hidden" name="_method" value="put">
+        <% end %>
+      </form>
+    </div>
+  </body>
+</html>

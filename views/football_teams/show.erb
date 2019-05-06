@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/css/show.css">
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1> <%= @teams.name %> </h1>
+    </div>
+
+    <div class="container-fluid">
+      <img src=<%= @teams.image %> alt="">
+
+
+      <p><%= "#{@teams.name} have #{@teams.points} points and are in #{@teams.position} place" %></p>
+
+
+      <h2>Players</h2>
+
+      <% @players.each do |player| %>
+      <div>
+
+        <p> <a href="/players/<%= player.id %>"><%= "#{player.first_name} #{player.last_name}" %></a> <%= "plays as #{player.position} for #{player.name}" %></p>
+      </div>
+      <% end %>
+
+      <a class="btn btn-default" href="/teams">Football Teams</a>
+
+
+      <a class="btn btn-default" href="/teams/<%= @teams.id %>/edit">Edit</a>
+
+
+
+      <form  class = "btn delete" action="/teams/<%= @teams.id %>" method="post">
+        <input class="btn btn-default" type="hidden" name="_method" value="DELETE">
+        <input class="btn btn-default" type="submit" value="Delete">
+      </form>
+    </div>
+  </body>
+</html>
