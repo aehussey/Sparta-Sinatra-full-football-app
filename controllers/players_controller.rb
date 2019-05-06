@@ -1,3 +1,6 @@
+require_relative '../models/player/player'
+
+
 class PlayerController < Sinatra::Base
 
   set :root, File.join(File.dirname(__FILE__), "..")
@@ -8,103 +11,112 @@ class PlayerController < Sinatra::Base
     register Sinatra::Reloader
   end
 
-  $players = [{
-    id: 0,
-    name: "Jonjo",
-    points: 92,
-    position: "1st",
-    image: "https://picsum.photos/200"
-
-    },
-    {
-    id: 1,
-    name: "CHO",
-    points: 91,
-    position: "2nd",
-    image: "https://picsum.photos/200"
-
-    },
-    {
-    id: 2,
-    name: "RLC",
-    points: 71,
-    position: "3rd",
-    image: "https://picsum.photos/200"
-
-    },
-    {
-    id: 3,
-    name: "JT",
-    points: 70,
-    position: "4th",
-    image: "https://picsum.photos/200"
-    }]
+  # $players = [{
+  #   id: 0,
+  #   name: "Jonjo",
+  #   points: 92,
+  #   position: "1st",
+  #   image: "https://picsum.photos/200"
+  #
+  #   },
+  #   {
+  #   id: 1,
+  #   name: "CHO",
+  #   points: 91,
+  #   position: "2nd",
+  #   image: "https://picsum.photos/200"
+  #
+  #   },
+  #   {
+  #   id: 2,
+  #   name: "RLC",
+  #   points: 71,
+  #   position: "3rd",
+  #   image: "https://picsum.photos/200"
+  #
+  #   },
+  #   {
+  #   id: 3,
+  #   name: "JT",
+  #   points: 70,
+  #   position: "4th",
+  #   image: "https://picsum.photos/200"
+  #   }]
 
 
   get "/players" do
 
-    @players = $players
+    @players = Player.all
 
     erb :'players/index'
 
   end
 
   get "/players/new" do
-    @teams = {
-      id: "",
-      name: "",
-      points: "",
-      position: "",
-      image: ""
-
-    }
+    @players = Player.new
 
     erb :'players/new'
   end
 
   get "/players/:id" do
     id = params[:id].to_i
-    @teams = $teams[id]
-    erb :'players/show'
+    @players = Player.find(id)
+    puts @players.first_name
+    puts  @players.last_name
+    @team = Player.team(@players.first_name, @players.last_name)
+
+    erb  :'players/show'
   end
 
   get "/players/:id/edit" do
     id = params[:id].to_i
-
-    @teams = $teams[id]
+    @players = Player.find(id)
     erb :'players/edit'
   end
 
-  post "/players/" do
-    new_team = {
-    id: $teams.length,
-    name: params[:name],
-    points: params[:points],
-    position: params[:position]}
+  post "/players" do
+    player = Player.new
 
-    $teams.push(new_team)
+    player.first_name = params[:first_name]
+    player.last_name = params[:last_name]
+    player.age = params[:age]
+    player.position = params[:position]
+    player.team_id = params[:team_id]
+    player.image = params[:image]
 
-    redirect '/players/'
+    #Save the post to the database
+
+    player.save
+
+    redirect '/players'
 
   end
 
   put "/players/:id" do
+
     id = params[:id].to_i
 
-    $teams[id][:name] = params[:name]
-    $teams[id][:points] = params[:points]
-    $teams[id][:position] = params[:position]
+    team = Player.find(id)
 
-    redirect '/players/'
+    player.first_name = params[:first_name]
+    player.last_name = params[:last_name]
+    player.age = params[:age]
+    player.position = params[:position]
+    player.team_id = params[:team_id]
+    player.image = params[:image]
+
+    team.save
+
+    redirect '/players'
+
   end
 
   delete "/players/:id" do
 
     id = params[:id].to_i
 
-    $teams.delete_at(id)
+    Player.destroy(id)
 
-    redirect '/players/'
+    redirect '/players'
   end
-
 end

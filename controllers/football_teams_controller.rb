@@ -1,4 +1,4 @@
-
+require_relative '../models/football_team/football'
 class FootballTeamController < Sinatra::Base
 
 
@@ -11,103 +11,74 @@ class FootballTeamController < Sinatra::Base
     register Sinatra::Reloader
   end
 
-  $teams = [{
-    id: 0,
-    name: "Man City",
-    points: 92,
-    position: "1st",
-    image: "https://picsum.photos/200"
-
-    },
-    {
-    id: 1,
-    name: "Liverpool",
-    points: 91,
-    position: "2nd",
-    image: "https://picsum.photos/200"
-
-    },
-    {
-    id: 2,
-    name: "Spurs",
-    points: 71,
-    position: "3rd",
-    image: "https://picsum.photos/200"
-
-    },
-    {
-    id: 3,
-    name: "Chelsea",
-    points: 70,
-    position: "4th",
-    image: "https://picsum.photos/200"
-    }]
-
 
   get "/teams" do
 
-    @teams = $teams
+    @teams = Football.all
 
     erb :'football_teams/index'
 
   end
 
   get "/teams/new" do
-    @teams = {
-      id: "",
-      name: "",
-      points: "",
-      position: "",
-      image: ""
+    @teams = Football.new
 
-    }
-
-    erb :'teams/new'
+    erb :'football_teams/new'
   end
 
   get "/teams/:id" do
     id = params[:id].to_i
-    @teams = $teams[id]
-    erb :'teams/show'
+    @teams = Football.find(id)
+    @players = Football.players(id)
+
+
+    erb  :'football_teams/show'
   end
 
   get "/teams/:id/edit" do
     id = params[:id].to_i
-
-    @teams = $teams[id]
-    erb :'teams/edit'
+    @teams = Football.find(id)
+    erb :'football_teams/edit'
   end
 
-  post "/teams/" do
-    new_team = {
-    id: $teams.length,
-    name: params[:name],
-    points: params[:points],
-    position: params[:position]}
+  post "/teams" do
+    team = Football.new
 
-    $teams.push(new_team)
+    team.name = params[:name]
+    team.points = params[:points]
+    team.position = params[:position]
 
-    redirect '/teams/'
+    #Save the post to the database
+
+    team.save
+
+    redirect '/teams'
 
   end
 
   put "/teams/:id" do
+
     id = params[:id].to_i
 
-    $teams[id][:name] = params[:name]
-    $teams[id][:points] = params[:points]
-    $teams[id][:position] = params[:position]
+    team = Football.find(id)
 
-    redirect '/teams/'
+    team.name = params[:name]
+    team.points = params[:points]
+    team.position = params[:position]
+
+    team.save
+
+    redirect '/teams'
+
   end
 
   delete "/teams/:id" do
 
     id = params[:id].to_i
 
-    $teams.delete_at(id)
+    Football.destroy(id)
 
-    redirect '/teams/'
+    redirect '/teams'
   end
 
 end

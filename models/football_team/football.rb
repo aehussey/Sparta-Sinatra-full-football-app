@@ -13,7 +13,7 @@ class Football
   def self.all
     connection = self.open_connection
 
-    sql = "SELECT * FROM football_team ORDER by ID"
+    sql = "SELECT id, name, points, position FROM football_team ORDER BY id"
 
     results = connection.exec(sql)
 
@@ -47,7 +47,7 @@ class Football
 
     team.id = team_data['id']
     team.name = team_data['name']
-    team.points = team_data[points]
+    team.points = team_data['points']
     team.position = team_data['position']
     team.image = team_data['image']
 
@@ -58,11 +58,14 @@ class Football
     connection = Football.open_connection
 
     if !self.id
-      sql = "INSERT INTO football_team (name, points, position, image) VALUES ('#{self.name}', #{self.points}, '#{self.position}', '#{self.image}')"
+
+      sql = "INSERT INTO football_team (name, points, position) VALUES ('#{self.name}', #{self.points}, '#{self.position}')"
+
 
     else
 
-      sql = "UPDATE football_team SET name = '#{self.name}', points = #{self.points}, position = '#{self.position}', image = '#{self.image}' WHERE id = #{self.id}"
+      sql = "UPDATE football_team SET name = '#{self.name}', points = #{self.points}, position = '#{self.position}' WHERE id = #{self.id}"
+
     end
 
     connection.exec(sql)
@@ -76,8 +79,20 @@ class Football
     connection.exec(sql)
   end
 
+  def self.players(id)
+    connection = self.open_connection
 
+    sql = "Select p.first_name, p.last_name, t.name FROM player p INNER JOIN football_team t ON p.team_id = t.id WHERE t.id = #{id};"
 
+    results = connection.exec(sql)
+
+    players = results.map do |player|
+      self.hydrate(player)
+    end
+
+    players
+
+  end
 
 end
 

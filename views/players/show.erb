@@ -1,14 +1,32 @@
-<h1> <%= @teams[:name] %> </h1>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/css/show.css">
 
-<img src=<%= @teams[:image] %> alt="">
+  </head>
+  <body>
+    <div class="container-fluid">
+
+    <h1> <%= @players.first_name + " " + @players.last_name %> </h1>
+
+    </div>
 
 
-<p><%= "#{@teams[:name]} have #{@teams[:points]} points and are in #{@teams[:position]} place" %></p>
+    <div class="container-fluid">
+      <img src=<%= @players.image %> alt="">
 
-<a href="/<%= @teams[:id] %>/edit">edit</a>
+
+      <p><%= "#{@players.first_name} #{@players.last_name} is #{@players.age} and plays as a #{@players.position} for #{@team.inspect}" %></p>
+
+      <a class="btn btn-default" href="/players/<%= @players.id %>/edit">edit</a>
 
 
-<form  action="/<%= @teams[:id] %>" method="post">
-  <input type="hidden" name="_method" value="DELETE">
-  <input type="submit" value="Delete">
-</form>
+      <form class = "btn" action="/players/<%= @players.id %>" method="post">
+        <input class="btn btn-default" type="hidden" name="_method" value="DELETE">
+        <input class="btn btn-default" type="submit" value="Delete">
+      </form>
+    </div>
+  </body>
+</html>

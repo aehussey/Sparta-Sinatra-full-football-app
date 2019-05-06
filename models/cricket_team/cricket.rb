@@ -13,7 +13,7 @@ class Cricket
   def self.all
     connection = self.open_connection
 
-    sql = "SELECT * FROM cricket_team ORDER by ID"
+    sql = "SELECT * FROM cricket_team ORDER by points DESC"
 
     results = connection.exec(sql)
 
@@ -47,11 +47,11 @@ class Cricket
 
     team.id = team_data['id']
     team.name = team_data['name']
-    team.points = team_data[points]
+    team.points = team_data['points']
     team.position = team_data['position']
     team.image = team_data['image']
 
-    post
+    team
   end
 
   def save

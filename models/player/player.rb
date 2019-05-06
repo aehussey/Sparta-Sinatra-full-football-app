@@ -1,7 +1,7 @@
 require 'pg'
 
 class Player
-  attr_accessor(:id, :title, :body)
+  attr_accessor(:id, :first_name, :last_name, :age, :position, :team_id, :image)
 
   #Connect to the database
   def self.open_connection
@@ -13,7 +13,7 @@ class Player
   def self.all
     connection = self.open_connection
 
-    sql = "SELECT id, title, body FROM post ORDER by ID"
+    sql = "SELECT id, first_name, last_name, age, position FROM player ORDER by ID"
 
     results = connection.exec(sql)
 
@@ -29,7 +29,7 @@ class Player
   def self.find(id)
     connection = self.open_connection
 
-    sql = "SELECT * FROM post WHERE id = #{id} LIMIT 1"
+    sql = "SELECT * FROM player WHERE id = #{id} LIMIT 1"
 
     posts = connection.exec(sql)
 
@@ -42,25 +42,29 @@ class Player
 
 
   #Passing the PG object through hydration by making an instance within the class
-  def self.hydrate(post_data)
-    post = Player.new
+  def self.hydrate(player_data)
+    player = Player.new
 
-    post.id = post_data['id']
-    post.title = post_data['title']
-    post.body = post_data['body']
+    player.id = player_data['id']
+    player.first_name = player_data['first_name']
+    player.last_name = player_data['last_name']
+    player.age = player_data['age']
+    player.position = player_data['position']
+    player.team_id = player_data['team_id']
+    player.image = player_data['image']
 
-    post
+    player
   end
 
   def save
     connection = Player.open_connection
 
     if !self.id
-      sql = "INSERT INTO post (title, body) VALUES ('#{self.title}', '#{self.body}')"
+      sql = "INSERT INTO post (first_name, last_name, age, position, team_id, image) VALUES ('#{self.first_name}', '#{self.last_name}', #{self.age}, '#{self.position}', #{self.team_id}, '#{self.image}')"
 
     else
 
-      sql = "UPDATE post SET title = '#{self.title}', body = '#{self.body}' WHERE id = #{self.id}"
+      sql = "UPDATE post SET first_name = '#{self.first_name}', last_name = '#{self.last_name}', age = #{self.age}, last_name = '#{self.position}' WHERE id = #{self.id}"
     end
 
     connection.exec(sql)
@@ -75,7 +79,20 @@ class Player
   end
 
 
+  def self.team(first_name, last_name)
+    connection = self.open_connection
 
+    sql = "Select p.first_name, p.last_name, t.name FROM player p INNER JOIN football_team t ON p.team_id = t.id WHERE p.first_name = '#{first_name}' AND p.last_name = '#{last_name}';"
+
+    results = connection.exec(sql)
+
+    teams = results.map do |team|
+      self.hydrate(team)
+    end
+
+    teams
+
+  end
 
 end
 
